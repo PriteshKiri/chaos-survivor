@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import MascotPlayground from "./MascotPlayground";
+import { sound } from "../lib/sound";
 
 function Step({ icon, title, desc }) {
   return (
@@ -16,6 +18,19 @@ function Step({ icon, title, desc }) {
 
 export default function LandingPage() {
   const [hasQr, setHasQr] = useState(true);
+  // Booth display: keep the home screen silent by default. The toggle lets an
+  // operator unmute the mascot's pod-termination blips if they want them.
+  const [muted, setMuted] = useState(true);
+
+  useEffect(() => {
+    sound.setMuted(true);
+  }, []);
+
+  function toggleMute() {
+    const next = !muted;
+    setMuted(next);
+    sound.setMuted(next);
+  }
 
   return (
     <div className="chaos-backdrop relative flex min-h-screen flex-col overflow-hidden">
@@ -29,12 +44,17 @@ export default function LandingPage() {
         }}
       />
 
-      {/* Floating mascot, top-right accent */}
-      <img
-        src="/mascot.png"
-        alt="mascot"
-        className="animate-float pointer-events-none absolute -right-6 top-10 h-48 w-48 opacity-90 drop-shadow-2xl sm:h-64 sm:w-64"
-      />
+      {/* Autonomous chaos mascot patrolling the background, terminating stray
+          Kubernetes resources. */}
+      <MascotPlayground />
+
+      <button
+        onClick={toggleMute}
+        className="absolute right-6 top-6 z-10 rounded-lg border border-chaos-border bg-chaos-panel/70 px-3 py-2 text-sm text-slate-300 transition hover:bg-chaos-bg"
+        title="Toggle sound"
+      >
+        {muted ? "🔇" : "🔊"}
+      </button>
 
       <main className="relative z-[1] mx-auto flex w-full max-w-6xl flex-1 flex-col items-center justify-center gap-12 px-8 py-20 lg:flex-row lg:items-center lg:justify-between">
         {/* Left: messaging */}
