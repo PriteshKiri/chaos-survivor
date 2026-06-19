@@ -98,7 +98,7 @@ export default function LandingPage() {
         {/* Right: QR */}
         <div className="flex flex-col items-center">
           <div className="rounded-3xl border border-chaos-border bg-chaos-panel p-6 shadow-2xl">
-            <div className="flex h-64 w-64 items-center justify-center overflow-hidden rounded-2xl bg-white">
+            <div className="flex aspect-square w-[32rem] max-w-[calc(100vw-4rem)] items-center justify-center overflow-hidden rounded-2xl bg-white">
               {hasQr ? (
                 <img
                   src="/qr.png"
@@ -131,7 +131,7 @@ export default function LandingPage() {
             <span className="text-litmus-bright">📲</span> Scan to participate
           </p>
           <p className="mt-1 font-mono text-xs text-slate-500">
-            Drop your QR at <span className="text-slate-400">public/qr.png</span>
+            Open the giveaway form in seconds
           </p>
         </div>
       </main>
